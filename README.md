@@ -26,19 +26,44 @@ This project was built using **Functional Programming** principles to ensure a c
 * `visualization.py` - Dedicated module for generating interactive charts and statistical heatmaps.
 * `requirements.txt` - List of necessary Python dependencies.
 
-## Installation & Usage
+## 📥 Installation & Usage
 
 Follow these steps to set up the project on your local machine:
 
 1. Clone the repository to download source code
+```
 git clone https://github.com/zpadol/Iran-Conflict-Financial-EDA-.git
-cd Iran-Conflict-Financial-EDA- 
+cd Iran-Conflict-Financial-EDA-
+```
 
-3. Install Dependencies
+2. Install Dependencies
+```
 pip install -r requirements.txt
-
-4. Run the Dashboard
+```
+3. Run the Dashboard
+```
 streamlit run main.py
+```
+## 📋 Dashboard view
+After running the program, an interactive Streamlit Dashboard is launched. The interface features a sidebar that allows users to dynamically adjust the date range for analysis and toggle between English and Polish descriptions. The dashboard is organized into five main tabs: General, Volatility, Correlation, Heatmap, and ROI. Each section provides a specialized layer of financial data analysis, which will be described in detail in the following chapters.
+![view](screenshots/dashboard_view.png)
 
+## 🔎 Details of the project
+Below you will find a **detailed walkthrough of all the dashboard sections**. To ensure clarity, each section begins with a functional description and ends with a concise conclusion summarizing the key findings (with the exception of the ROI section, which serves as an interactive simulation tool).
+
+![ss1](screenshots/proj1.png)
+![ss2](screenshots/proj2.png)
+![ss3](screenshots/proj3.png)
+![ss4](screenshots/proj4.png)
+![ss5](screenshots/proj5.png)
+![ss6](screenshots/proj6.png)
+![ss7](screenshots/proj7.png)
+![ss8](screenshots/proj8.png)
+![ss9](screenshots/proj9.png)
+![ss10](screenshots/proj10.png)
+![ss11](screenshots/proj11.png)
+
+---
+Experience the full potential of this interactive analysis by running the dashboard locally. Check out the Installation section above to get started! ⭐
 
 
