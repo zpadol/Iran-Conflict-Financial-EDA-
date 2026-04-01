@@ -26,6 +26,7 @@ This project was built using **Functional Programming** principles to ensure a c
 * `visualization.py` - Dedicated module for generating interactive charts and statistical heatmaps.
 * `requirements.txt` - List of necessary Python dependencies.
 
-   ```bash
-   git clone [https://github.com/zpadol/Iran-Conflict-Financial-EDA-.git](https://github.com/zpadol/Iran-Conflict-Financial-EDA-.git)
-   cd Iran-Conflict-Financial-EDA-
+git clone [https://github.com/zpadol/Iran-Conflict-Financial-EDA-.git](https://github.com/zpadol/Iran-Conflict-Financial-EDA-.git)
+cd Iran-Conflict-Financial-EDA-
+
+
