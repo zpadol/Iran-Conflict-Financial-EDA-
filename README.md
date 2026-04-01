@@ -31,12 +31,14 @@ This project was built using **Functional Programming** principles to ensure a c
 Follow these steps to set up the project on your local machine:
 
 1. Clone the repository to download source code
-"""git clone https://github.com/zpadol/Iran-Conflict-Financial-EDA-.git
-cd Iran-Conflict-Financial-EDA-"""
+git clone https://github.com/zpadol/Iran-Conflict-Financial-EDA-.git
+cd Iran-Conflict-Financial-EDA- 
 
-2. Install Dependencies
-"""pip install -r requirements.txt"""
+3. Install Dependencies
+pip install -r requirements.txt
 
-3. Run the Dashboard
-""streamlit run main.py"""
+4. Run the Dashboard
+streamlit run main.py
+
+
 
