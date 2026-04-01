@@ -26,7 +26,17 @@ This project was built using **Functional Programming** principles to ensure a c
 * `visualization.py` - Dedicated module for generating interactive charts and statistical heatmaps.
 * `requirements.txt` - List of necessary Python dependencies.
 
-git clone [https://github.com/zpadol/Iran-Conflict-Financial-EDA-.git](https://github.com/zpadol/Iran-Conflict-Financial-EDA-.git)
-cd Iran-Conflict-Financial-EDA-
+## Installation & Usage
 
+Follow these steps to set up the project on your local machine:
+
+1. Clone the repository to download source code
+"""git clone https://github.com/zpadol/Iran-Conflict-Financial-EDA-.git
+cd Iran-Conflict-Financial-EDA-"""
+
+2. Install Dependencies
+"""pip install -r requirements.txt"""
+
+3. Run the Dashboard
+""streamlit run main.py"""
 
