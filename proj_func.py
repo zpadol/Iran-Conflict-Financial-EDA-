@@ -136,24 +136,10 @@ def asset_pipeline_norm(name):
         download_market
     )
 
-def get_all_merged_data_norm(assets_config, start, end):
-    """
-    (PL) Pobiera wiele aktywów i łączy je w jedną tabelę na podstawie indeksu dat.
-    (EN) Fetches multiple assets and merges them into a single table based on date index.
-    """
-    dfs = [
-        asset_pipeline_norm(name)((ticker, start, end))
-        for ticker, name in assets_config
-    ]
-    return reduce(
-        lambda left, right: pd.merge(left, right, left_index=True, right_index=True, how='inner'),
-        dfs
-    )
-
 
 def get_all_data_with_extremes(assets_config, start, end):
     """
-    (PL) Pobiera dane, łączy je i oblicza ekstrema (Max/Min) dla każdego aktywa.
+    (PL) Pobiera dane,oblicza %, łączy i oblicza ekstrema (Max/Min) dla każdego aktywa.
     (EN) Fetches data, merges it, and calculates extremes (Max/Min) for each asset.
     """
     dfs = [
@@ -191,7 +177,7 @@ def get_total_change(ticker, name, start, end, decimals=3):
 
 def get_regression_analysis_report(assets_config, start, end, x_asset_name, y_asset_name):
     """
-    (PL) Pełny proces: Pobiera dane dla wielu aktywów, łączy je i zwraca model regresji.
+    (PL) Pełny proces: Pobiera dane dla wielu aktywów, oblicza %, łączy i zwraca model regresji.
     (EN) Full process: Fetches data for multiple assets, merges them, and returns the regression model.
     """
     dfs = [
