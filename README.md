@@ -46,7 +46,7 @@ streamlit run main.py
 ```
 ## 📋 Dashboard view
 After running the program, an interactive Streamlit Dashboard is launched. The interface features a sidebar that allows users to dynamically adjust the date range for analysis and toggle between English and Polish descriptions. The dashboard is organized into five main tabs: General, Volatility, Correlation, Heatmap, and ROI. Each section provides a specialized layer of financial data analysis, which will be described in detail in the following chapters.
-![view](screenshots/dashboard_view.png)
+![view](screenshots/view2.png)
 
 ## 🔎 Details of the project
 Below you will find a **detailed walkthrough of all the dashboard sections**. To ensure clarity, each section begins with a functional description and ends with a concise conclusion summarizing the key findings (with the exception of the ROI section, which serves as an interactive simulation tool).
