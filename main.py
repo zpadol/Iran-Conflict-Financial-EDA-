@@ -7,9 +7,14 @@ from proj_func import *
 with st.sidebar:
     st.subheader("🌍 Translate descriptions / Przetłumacz opisy", divider="gray")
     translate = st.toggle("Click to translate")
-    st.subheader("🗓️Choose date to analyze:", divider="gray")
-    start = st.date_input("Start date", pd.to_datetime("2026-02-24"))
-    end = st.date_input("End date", pd.to_datetime("2026-03-31"))
+    if translate:
+        st.subheader("🗓️Wybierz daty do analizy:", divider="gray")
+        st.info("Pamiętaj, że pomimo możliwości wyboru dat, moja analiza łącznie z wnioskami itp. jest przeprowadzona dla dni od 24.02 do 13.04 ", icon="ℹ️")
+    else:
+        st.subheader("🗓️Choose dates to analyze:", divider="gray")
+        st.info("Remember that despite your chosen dates, the analysis with insights etc. is conducted between 24.02 and 13.04 ", icon="ℹ️")
+    start = st.date_input( "Start date/Data początkowa", pd.to_datetime("2026-02-24"))
+    end = st.date_input("End date/Data końcowa", pd.to_datetime("2026-04-13"))
 if translate:
     st.title("📈EIMI & Ropa w czasach konfliktu w Iranie")
 else:
@@ -42,7 +47,8 @@ pct_merged = pct_full_merged[[
 total_change_eimi = get_total_change("EIMI.L", "EIMI_Price", start, end)
 total_change_oil = get_total_change("CL=F", "Oil_Price", start, end)
 
-tab1,tab2,tab3, tab4, tab5 = st.tabs(["General", "Volatility","Correlation", "Heatmap", "ROI"])
+topics =  ["Ogólne","Zmienność","Korelacja","Mapa Cieplna","ROI"] if translate else ["General", "Volatility","Correlation", "Heatmap", "ROI"]
+tab1,tab2,tab3, tab4, tab5 = st.tabs(topics)
 
 # przygtowanie danych, obliczanie modelu regresji, wyznaczenie statystyk
 lm = get_regression_analysis_report(
@@ -50,7 +56,7 @@ lm = get_regression_analysis_report(
 )
 slope = round(lm['slope'],3)
 r_sq = round(lm['rvalue'] ** 2,3)
-p_val = round(lm['pvalue'],3)
+p_val = round(lm['pvalue'],8)
 
 
 with tab1:
@@ -153,13 +159,16 @@ with tab2:
         
         Kluczowe obserwacje z tabeli zmian procentowych:
        * Przeciwstawne zwroty: W większości sesji znaki dziennych stóp zwrotu są odwrotne – wzrostom jednego aktywa towarzyszą spadki drugiego.
-       * Ekstrema (10 marca): Najlepszy dowód ujemnej korelacji odnotowano 10 marca. Tego dnia indeks EIMI osiągnął swój maksymalny dzienny wzrost (+3,21%), co precyzyjnie zbiegło się w czasie z najgłębszym dziennym spadkiem cen ropy (-11,94%).
+       * Ekstrema ({ext_eimi['max_date']}): Najlepszy dowód ujemnej korelacji odnotowano {ext_eimi['max_date']}. Tego dnia indeks EIMI osiągnął swój maksymalny dzienny wzrost (+{ext_eimi['max_value']:.2f}%), co precyzyjnie zbiegło się w czasie z najgłębszym dziennym spadkiem cen ropy ({ext_oil['min_value']:.2f}%).
       
       **Analiza zdarzeniowa**
       
       6 marca 2026:      
       Największy wzrost ceny ropy (12%) zbiegł się w czasie z rozpoczęciem przez Izrael operacji „Roaring Lion” wymierzonej bezpośrednio w Teheran. Kluczowym czynnikiem zapalnym było zniszczenie strategicznego centrum dowodzenia w stolicy Iranu oraz zmasowane ataki na ponad 400 celów militarnych, co wywołało u inwestorów obawy o całkowite wstrzymanie eksportu surowca z regionu Zatoki Perskiej.
      Dodatkowo, tego samego dnia Donald Trump zażądał od Iranu „unconditional surrender” (bezwarunkowej kapitulacji). Ta radykalna retoryka polityczna odcięła drogę do negocjacji, stając się kluczowym katalizatorem rekordowego wzrostu cen ropy.
+     
+     8 kwietnia 2026:  
+     Dane z 8 kwietnia 2026 roku stanowią doskonały przykład „Rajdu Ulgi”. Ogłoszenie zawieszenia broni wynegocjowanego pod przewodnictwem Pakistanu – zaledwie kilka godzin przed upływem amerykańskiego ultimatum – spowodowało spadek cen ropy poniżej psychologicznego progu 100 USD. Jednocześnie indeks EIMI odnotował dynamiczne odbicie, gdy bezpośrednie widmo eskalacji militarnej zostało oddalone. Sytuacja ta jaskrawo podkreśla wrażliwość rynków wschodzących na geopolityczne „czarne łabędzie” oraz znaczenie dyplomatycznych przełomów dla stabilności finansowej.
        """)
 
     else :
@@ -168,13 +177,17 @@ with tab2:
         
         Key observations from the percentage change table:
         * Inverse Returns: In the majority of sessions, the daily returns show opposite signs—gains in one asset are typically accompanied by losses in the other.
-       * Daily Extremes (March 10th): The strongest evidence of this negative correlation occurred on March 10th. On this day, the EIMI index reached its maximum daily gain (+3.21%), precisely coinciding with the sharpest daily decline in oil prices (-11.94%).
+       * Daily Extremes ({ext_eimi['max_date']}): The strongest evidence of this negative correlation occurred on {ext_eimi['max_date']}. On this day, the EIMI index reached its maximum daily gain (+{ext_eimi['max_value']:.2f}%), precisely coinciding with the sharpest daily decline in oil prices ({ext_oil['min_value']:.2f}%).
         
         **Event Study** 
         
         March 6, 2026:     
         The highest surge in oil prices during the analyzed period (12%) coincided with the launch of Israel's "Roaring Lion" operation, directly targeting Tehran. Key triggers included the destruction of a strategic command center in the Iranian capital and massive strikes on over 400 military targets. This sparked widespread investor panic regarding a potential total halt of oil exports from the Persian Gulf.
         Furthermore, on this same day, Donald Trump demanded Iran's "unconditional surrender". This radical political rhetoric effectively closed the door to diplomatic negotiations, serving as a primary catalyst for the record percentage increase in oil prices.
+        
+        April 8, 2026:  
+        The data from April 8, 2026, serves as a perfect case study of a 'Relief Rally'. The announcement of a Pakistan-led ceasefire just hours before the U.S. military deadline caused oil prices to cool down below the $100 threshold. Simultaneously, the EIMI index saw a broad recovery as the immediate threat of a massive bombardment receded. This highlights the extreme sensitivity of emerging markets to geopolitical 'black swan' events and diplomatic breakthroughs.
+        
         """)
 with (tab3):
     if translate:
@@ -237,7 +250,7 @@ with (tab3):
         1. **Wrażliwość (Slope: {slope})**
         Współczynnik kierunkowy potwierdza ujemną zależność: statystycznie wzrost ceny ropy o 1% przekłada się na spadek wartości indeksu EIMI o ok. {-slope}%. Świadczy to o tym, że rynki wschodzące są wrażliwe na szoki energetyczne, choć reakcja nie jest gwałtownie proporcjonalna.
         2. **Siła wyjaśniająca ($R^2$: {r_sq*100:.0f}%)**
-        Wartość współczynnika determinacji wskazuje, że ropa naftowa wyjaśnia {r_sq*100:.0f}% zmienności indeksu EIMI w badanym okresie. W analizie rynków finansowych, gdzie na ceny wpływają tysiące zmiennych (stopy procentowe, inflacja, polityka Chin), wynik ok. 40% dla pojedynczego surowca jest uznawany za znaczący. Potwierdza to, że w czasie konfliktu w Iranie ropa stała się jednym z głównych (choć oczywiście nie jedynym) motorów napędowych zmian na giełdach.
+        Wartość współczynnika determinacji wskazuje, że ropa naftowa wyjaśnia {r_sq*100:.0f}% zmienności indeksu EIMI w badanym okresie. W analizie rynków finansowych, gdzie na ceny wpływają tysiące zmiennych (stopy procentowe, inflacja, polityka Chin), wynik ok. {r_sq*100:.0f}% dla pojedynczego surowca jest uznawany za znaczący. Potwierdza to, że w czasie konfliktu w Iranie ropa stała się jednym z głównych (choć oczywiście nie jedynym) motorów napędowych zmian na giełdach.
         3. **Wiarygodność (p-value: {p_val})**
         Otrzymany wynik $p < 0.01$ pozwala z wysoką pewnością odrzucić hipotezę o przypadkowości tych powiązań. Zależność jest istotna statystycznie, co oznacza, że zaobserwowany trend spadkowy EIMI przy rosnącej ropie ma swoje głębokie uzasadnienie w danych, a nie jest jedynie dziełem przypadku.
         """)
@@ -246,7 +259,7 @@ with (tab3):
         1. **Sensitivity (Slope: {slope})**
         The slope coefficient confirms a negative correlation: statistically, a 1% increase in oil prices translates to an approx. {-slope}% decrease in the EIMI index value. This indicates that emerging markets are sensitive to energy shocks, although the reaction is not strictly proportional.
         2. **Explanatory Power ($R^2$: {r_sq*100:.0f}%)**
-        The coefficient of determination indicates that crude oil explains {r_sq*100:.0f}% of the EIMI index volatility during the analyzed period. In financial market analysis - where prices are influenced by thousands of variables (interest rates, inflation, geopolitical shifts) - a result of around 40% for a single commodity is considered highly significant. This confirms that during the Iran conflict, oil became one of the primary (though not the only) drivers of stock market movements.
+        The coefficient of determination indicates that crude oil explains {r_sq*100:.0f}% of the EIMI index volatility during the analyzed period. In financial market analysis - where prices are influenced by thousands of variables (interest rates, inflation, geopolitical shifts) - a result of around {r_sq*100:.0f}% for a single commodity is considered highly significant. This confirms that during the Iran conflict, oil became one of the primary (though not the only) drivers of stock market movements.
         3. **Reliability (p-value: {p_val})**
         The result of $p < 0.01$ allows for the rejection of the null hypothesis regarding the randomness of these associations with high confidence. The relationship is statistically significant, meaning the observed downward trend in EIMI alongside rising oil prices is deeply rooted in the data and is not merely a coincidence.
         """)
@@ -267,14 +280,14 @@ with tab4:
         st.markdown("""
         Mapa ujawnia kluczowe mechanizmy przepływu kapitału w warunkach wojennych:
         * Ucieczka do Dolara: Ujemna korelacja między EIMI a USD potwierdza odwrót od ryzykownych akcji na rzecz bezpiecznej waluty (Safe Haven).
-        * Zależność EIMI – Złoto (ok. 0,5): Dodatni współczynnik wskazuje na zbliżony kierunek zmian. Może to sugerować, że w szczytowej fazie paniki złoto nie zadziałało jako tarcza.
+        * Zależność EIMI – Złoto (ok. 0,55): Dodatni współczynnik wskazuje na zbliżony kierunek zmian. Może to sugerować, że w szczytowej fazie paniki złoto nie zadziałało jako tarcza.
         * Ropa i Dolar (ok. 0,6): Wyniki zmieniają się zgodnie - potwierdza to ucieczkę do Dolara (stabilnego aktywa). Inwestorzy w czasach paniki kupują ropę i dolara.
                 """)
     else:
         st.markdown("""
         The map reveals key capital flow mechanisms under wartime conditions:
         * Flight to the Dollar: The negative correlation between EIMI and USD confirms a shift away from risky equities toward a safe-haven currency (Safe Haven).
-        * EIMI – Gold Relationship (approx. 0.5): The positive coefficient indicates a similar direction of change. This may suggest that during the peak phase of the panic, gold did not act as a hedge.
+        * EIMI – Gold Relationship (approx. 0.55): The positive coefficient indicates a similar direction of change. This may suggest that during the peak phase of the panic, gold did not act as a hedge.
         * Oil and the Dollar (approx. 0.6): The results move in sync – this confirms the flight to the Dollar (a stable asset). In times of panic, investors buy both oil and the dollar.
                     """)
 with tab5:
